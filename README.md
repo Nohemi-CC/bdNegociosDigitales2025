@@ -10,6 +10,6 @@
 
 1. Base de datos NoSQL (MonogoDB).
 
-![Base de Datos](./Images/Imagen1.jpg)
+![Base de Datos](./Unidad1/Images/Imagen1.jpg)
 
 
