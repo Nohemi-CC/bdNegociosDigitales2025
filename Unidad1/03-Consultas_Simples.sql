@@ -6,7 +6,7 @@ select * from Products
 where UnitPrice >= 10 and UnitPrice<= 50;
 
 select * from Products
-where UnitPrice between 10 and 50
+where UnitPrice	between 10 and 50
 
 -- Seleccionar todos los pedidos realizados entre el 1 de enero y el 30 de junio de 1997
 

@@ -172,4 +172,209 @@ inner join [Order Details] as od
 on od.OrderID = o.OrderID
 group by e.FirstName, e.LastName
 
+--11. Listar los clientes y la cantidad de pedidos que han realizado
+
+Select c.CompanyName as Cliente,
+count(*) as 'numero de ordenes'
+from Customers as c 
+inner join Orders as o
+on c.CustomerID = o.CustomerID
+group by c.CompanyName
+order by count(*) desc
+
+--12. Obtener los empleadosque han gestionado pedidos enviados a alemania
+
+Select concat (e.FirstName, '', e.LastName) as [Nombre]
+from Employees as e
+inner join orders as o
+on e.EmployeeID =o.EmployeeID
+where o.ShipCountry ='Germany'
+
+--13. Listar los productos junto con el nombre del proovedor y el pais de origen
+
+select p.ProductName as [Nombre Producto],
+s.CompanyName as [Proveedor],
+s.Country as [Pais de origen]
+from Products as p
+inner join Suppliers as s
+on p.SupplierID = p.SupplierID
+order by 1 asc
+
+--14. Obtener los pedidos agrupados por pais de envio
+
+select o.ShipCountry as [Pais de Envio],
+count (o.OrderID) as [numero de ordenes]
+from Orders as o
+inner join
+group by
+
+--15. Obtener los empleados y la cantidad de territorios en los que trabajan
+
+select concat(e.FirstName, ' ', e.LastName) as [Nombre],
+count (et.TerritoryID)
+from Employees as e
+inner join EmployeeTerritories as et
+on e.EmployeeID = et.EmployeeID
+group by e.FirstName, e.LastName
+
+--16. Listar las categorias y las cantidad de productos que contienen
+select * from Products
+select * from Categories
+
+ select c.CategoryName as 'Nombre de la Categoria', COUNT (ProductID) as 'Cantidad de Productos'
+ from Categories as c
+ inner join Products as p
+ on c.CategoryID = p.CategoryID
+ group by CategoryName
+
+ --17. Obtener la cantidad de productos vendidos por proveedor 
+
+ Select * from Products
+ select * from [Order Details]
+ select * from Suppliers
+
+ Select s.CompanyName as 'Proveedor', sum (od.Quantity) as 'Total de productos vendidos'
+ from Suppliers as s
+ inner join Products as p
+ on s.SupplierID = p.SupplierID
+ inner join [Order Details] as od
+ on p.ProductID = od.ProductID
+ group by s.CompanyName
+
+--18. Obtener la cantidad de pedidos por cada empresa de transporte
+
+select S.CompanyName,count(*) as [Total de pedidos] 
+from Orders as o
+inner join Shippers as s
+on o.ShipVia = s.ShipperID
+group by s.CompanyName
+
+Select * from Orders
+
+Select count(*) from Orders
+
+Select count(OrderID) from Orders
+
+Select count(ShipRegion) from Orders
+
+--19. Obtener los clientes que han realizado pedidos con mas de un producto
+
+select c.CompanyName, count(distinct ProductID) as 'Numero Productos' 
+from
+Customers as c
+inner join Orders as o
+on c.CustomerID = o.CustomerID
+inner join [Order Details] as od
+on od.OrderID = o.OrderID
+group by c.CompanyName
+order by 2 desc 
+
+--20. Listas los empleados con la cantidad total de pedidos que ha gestionado, y a que clientes les han vendido, agrupandolos por nombre completo
+-- y dentro de este nombre por cliente, ordenandolos por la cantidad de mayor de pedidos
+
+select concat(e.FirstName, '', e.LastName) as Nombre,
+count (OrderID) as 'Numero de Ordenes' 
+from Orders as o
+inner join Employees as e
+on o.EmployeeID = e.EmployeeID
+group by  e.FirstName, e.LastName 
+order by [Nombre] asc
+
+
+
+select concat(e.FirstName, '', e.LastName) as Nombre, c.CompanyName as Cliente,
+count (OrderID) as 'Numero de Ordenes' 
+from Orders as o
+inner join Employees as e
+on o.EmployeeID = e.EmployeeID
+inner join Customers as c
+on o.CustomerID = c.CustomerID
+group by  e.FirstName, e.LastName, c.CompanyName
+order by [Nombre] asc, [Cliente]
+
+--21. Listar las categorias con el total de ingresos generados por sus productos
+
+select * from Categories
+select * from Products
+select * from [Order Details]
+
+select c.CategoryName as 'Nombre Categoria', p.ProductName as 'Nombre de Productos',
+sum (od.UnitPrice * od.Quantity) as 'Total de ingresos'
+from Categories as c
+inner join products as p
+on c.CategoryID = p.CategoryID
+inner join [Order Details] as od 
+on p.ProductID = od.ProductID
+group by c.CategoryName, p.ProductName
+
+--22. Listar los clientes en el total de $ gastado en pedido
+
+select * from Customers
+select * from Orders
+select * from [Order Details]
+
+select c.CompanyName as 'Cliente', o.OrderID as 'Id de Orden',
+sum (od.Quantity * UnitPrice) as 'Total de gasto en pedidos '
+from Customers as c
+inner join Orders as o
+on c.CustomerID = o.CustomerID 
+inner join [Order Details] as od
+on o.OrderID = od.OrderID
+group by c.CompanyName, o.OrderID
+
+--23. Listar los pedidos realizados entre el 1 de Enero de 1997 y el 30 de Junio de 1997 y mostrar el total de dinero
+
+Select * from Orders 
+select * from [Order Details]
+
+select o.OrderDate, sum (od.Quantity) as 'Total de dinero'
+from Orders as o
+inner join [Order Details] as od
+on o.OrderID = od.OrderID
+where o.OrderDate
+between '1997-01-01' and '1997-06-30'
+group by o.OrderDate
+
+
+--24.Listar lo productos con las categorias beverages, seafood y confetions 
+
+select * from Categories
+Select * from Products
+
+select c.CategoryName as 'Nombre de la Categoria', p.ProductName as 'Nombre del producto'
+from Categories as c
+inner join products as p
+on c.CategoryID = p.CategoryID
+where c.CategoryName in ('beverages', 'Seafood', 'Confections')
+
+
+--25. Listar los clientes ubicados en alemania y que hayan realizado pedidos antes de 1 de Enero de 1997
+
+select * from Customers 
+select * from Orders
+
+select c.Country as 'Ciudad', o.OrderDate as 'Dia de orden'
+from Customers as c
+inner join Orders as o
+on c.CustomerID = o.CustomerID
+where o.OrderDate< '1997-01-01' and c.Country = 'Germany'
+
+--26. Listar los clientes que han realizado pedidos con un total entre 500 y 2000 
+select * from Customers
+select * from Orders
+select * from [Order Details]
+
+
+select c.CompanyName as 'Cliente', sum (od.Quantity * od.UnitPrice) as 'Total'
+from Customers as c
+inner join Orders as o
+on c.CustomerID = o.CustomerID
+inner join [Order Details] as od
+on o.OrderID = od.OrderID
+group by c.CompanyName
+having sum(od.Quantity * od.UnitPrice) between 500 and 2000
+
+--Left join, right join, full join y cross join
+
+
 
