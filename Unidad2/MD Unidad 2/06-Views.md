@@ -1,21 +1,24 @@
---Views
+# Views
 
---Sirve oara encapsular una vista muy grande
+- Sirve oara encapsular una vista muy grande
 
---Sintaxis
+**Sintaxis**
+```sql
 /*create view nombreVista
 As
 select columnas 
 from tabla
 where condicion
 */
+```
 
---alter  -> para cambiar datos del campo
--- drop view -> Para borrar-
---create or alter -> para borrar y cambiar 
+- alter  -> para cambiar datos del campo
+-  drop view -> Para borrar-
+- create or alter -> para borrar y cambiar 
 
 use Northwind;
 
+```sql
 go
 
 create view VistaCategoriasTodas
@@ -26,9 +29,10 @@ Go
 
 select * from VistaCategoriasTodas
 where CategoryName = 'Beverages'
+```
 
---Crear una vista que permita visualizar solamente clientes de mexico y brazil
-
+## Crear una vista que permita visualizar solamente clientes de mexico y brazil
+```sql
 go
 
 create or alter view VistaClientesLatinos
@@ -42,9 +46,11 @@ select CompanyName	as Cliente, city as Ciudad, Country as pais
 from VistaClientesLatinos
 where city = 'Sao Paulo'
 order by 2 desc
+```
 
---Crear una vista que contenga los datos de todas las ordenes, los productos, categorias de productos, en la orden
--- calcular el importe
+## Crear una vista que contenga los datos de todas las ordenes, los productos, categorias de productos, en la orden, calcular el importe
+
+```sql
 go
 create or alter view [dbo]. [vistaOrdenesCompra]
 as
@@ -71,20 +77,27 @@ inner join Employees as e
 on o.EmployeeID = e.EmployeeID
 
 go
------------------
---Cuenta cu�ntas �rdenes �nicas existen en la base de datos usando la vista
+```
+
+## Cuenta cuentas ordenes unicas existen en la base de datos usando la vista
+```sql
 select count(distinct [Numero de Orden]) as [numero de Ordenes]
 from vistaOrdenesCompra
+```
 
---Suma el total de todas las ventas registradas en la base de datos
+## Suma el total de todas las ventas registradas en la base de datos
+```sql
 select sum([Cantidad de Venta] * [Precio de Venta]) as [Importe Total]
 from vistaOrdenesCompra
 go
-
+```
+```sql
 select sum(Importe) as [Importe Total]
 from vistaOrdenesCompra
 where year([Fecha de Orden]) between '1995' and '1996'
 go
+```
+```sql
 
 create or alter view vistaOrdenes_1995_1996
 as
@@ -103,8 +116,10 @@ create table rh.tablarh (
 	id int primary key,
 	nombrre nvarchar (50)
 )
+```
 
---Vista Horizontal
+## Vista Horizontal
+```sql
 create or alter view rh.ViewCategoriasProductos
 as
 select c.CategoryID, CategoryName, p.ProductID, p.ProductName
@@ -115,3 +130,4 @@ on c.CategoryID = p.CategoryID;
 go
 
 select * from rh.ViewCategoriasProductos
+```
