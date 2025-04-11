@@ -158,7 +158,7 @@ db.libros.find({precio:{$eq: 25}})
 
 3. Mostrar los documentos cuya cantidad sea menor a 5
 ```json
-db.libros.find({cantidad: {$lt:5}})
+one
 ```
 
 4. Mostrar los documentos que pertenecen al editorial biblio o planeta
